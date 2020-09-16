@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mapping.AccessOptions.GetOptions.GetNulls;
 import org.springframework.stereotype.Service;
 
 import com.tatianabrito.domain.User;
+import com.tatianabrito.dto.UserDTO;
 import com.tatianabrito.repository.UserRepository;
 import com.tatianabrito.services.exception.ObjectNotFoundException;
 
@@ -24,5 +26,13 @@ public class UserService {
 		Optional<User> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 		
+	}
+	
+	public User insert(User obj) {
+		return repo.insert(obj);
+	}
+	
+	public User fromDTO(UserDTO obj) {
+		return new User(obj.getId(), obj.getName(), obj.getEmail());
 	}
 }
